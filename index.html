@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Puzzle</title>
+		
+		<style >
+			
+			.grid-item {
+				display: block;
+				width: 200px;
+				height: 200px;
+				float: left;
+				background: turquoise;
+			}
+			
+		</style>
+	</head>
+	<body>
+		
+		<div class="grid">
+		  <div data-order="4" class="grid-item"></div>
+		  <div data-order="3" class="grid-item"></div>
+		  <div data-order="8" class="grid-item"></div>
+		  <div data-order="9" class="grid-item"></div>
+		  <div data-order="7" class="grid-item"></div>
+		  <div data-order="5" class="grid-item"></div>
+		  <div data-order="6" class="grid-item"></div>
+		  <div data-order="1" class="grid-item"></div>
+		  <div data-order="2" class="grid-item"></div>
+		</div>
+		
+		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+		<script src="https://unpkg.com/packery@2.1.1/dist/packery.pkgd.min.js"></script>
+		<script src="https://npmcdn.com/draggabilly@2.1.1/dist/draggabilly.pkgd.min.js"></script>
+		
+		<script>
+			
+			var checkPuzzle = function(){
+				var els = grid.packery('getItemElements');
+				for( var i in els){
+					console.log($(els[i]).data('order'));
+				};
+			}
+			
+			var grid = $('.grid').packery({
+			  itemSelector: '.grid-item',
+			  gutter: 1
+			});
+			
+			grid.find('.grid-item').each( function( i, gridItem ) {
+				var draggie = new Draggabilly( gridItem );
+				grid.packery( 'bindDraggabillyEvents', draggie );
+				draggie.on('dragEnd', checkPuzzle);
+			});
+			
+		</script>
+	</body>
+</html>
+
+
